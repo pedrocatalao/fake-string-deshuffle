@@ -1,0 +1,52 @@
+#!/bin/bash
+
+SCRIPTNAME=$(basename "$0")
+
+fake_deshuffle_one_by_one() {
+  word_len="${#1}"
+  for ((j=0; j<$word_len; j++)); do
+    for i in {1..5}; do
+      printf "${rnd_list:$(( RANDOM % ${#rnd_list} )):1}"
+      sleep 0.03
+      printf "\033[1D"
+    done
+    printf "${1:$j:1}"
+  done
+}
+
+fake_deshuffle_all() {
+  word_len="${#1}"
+  for ((k=0; k<$word_len; k++)); do
+    len_left=$((word_len-k))
+    for ((i=0; i<4; i++)); do
+      for ((j=0; j<$len_left; j++)); do
+        printf "${ncl}${rnd_list:$(( RANDOM % ${#rnd_list} )):1}"
+      done
+      sleep 0.03
+      printf "\033[${len_left}D"
+    done
+    printf "${1:$k:1}"
+  done
+}
+
+# Help
+if [[ "$1" == "--help" || "$1" == "" ]]; then
+  printf "Usage: $SCRIPTNAME [--onebyone] word
+--help          Show this message.
+--onebyone      Looks like a char by char brute force string cracker.
+(default)       Looks like a realistic brute force string cracker.
+
+Example: $SCRIPTNAME --onebyone ᵛᵉʳᶦᶠᶦᵉᵈ
+"
+  exit
+fi
+
+rnd_list="ᵡᵉᶜᵅʷ³ᶦᵝ⁾⁸ᶳʲ¹ᵍʲᵟⁿᵠᵘ⁷ᶿʸᵈᵏ⁵ᶠᵐˢ⁶ʳ⁻ᵠᶧⁱʳ⁽ᵖ⁴⁹ᵐᶻᵋᶢᵍᶩᶜᵆ²⁰ᵒˣˡᵞᵛᵄᵇᶹᵗᵗ⁺ʰᵃⁿᶠ"  
+
+if [[ "$1" == "--onebyone" ]]; then
+  fake_deshuffle_one_by_one "$2"
+else
+  fake_deshuffle_all "$1"
+fi
+
+printf "\n"
