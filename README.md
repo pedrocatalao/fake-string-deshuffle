@@ -1,5 +1,5 @@
 # fake-string-deshuffle
-These script creates a cool animation of deshuffling a string char by char or all at once, like a password cracker or so.
+This bash script creates a cool animation of deshuffling a string char by char or all at once, like a password cracker or so.
 
 ### There are a few options to customize the result
 
